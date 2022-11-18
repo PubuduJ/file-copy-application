@@ -8,7 +8,9 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
@@ -19,6 +21,7 @@ import javafx.util.Duration;
 import java.io.*;
 import java.text.NumberFormat;
 import java.util.List;
+import java.util.Optional;
 
 public class MainFormController {
 
@@ -98,16 +101,42 @@ public class MainFormController {
         if (srcDirectory == null) btnCopy.setDisable(srcFiles == null || destDir == null);
     }
 
-    public void btnCopy_OnAction(ActionEvent actionEvent) {
-
-    }
-
-    private String formatNumber(double input) {
-        NumberFormat number = NumberFormat.getNumberInstance();
-        number.setGroupingUsed(true);
-        number.setMinimumFractionDigits(2);
-        number.setMaximumFractionDigits(2);
-        return number.format(input);
+    public void btnCopy_OnAction(ActionEvent actionEvent) throws IOException {
+        if (srcFiles != null && srcDirectory == null) {
+            for (File file : srcFiles) {
+                File destFile = new File(destDir.getAbsolutePath(), file.getName());
+                if (destFile.exists()) {
+                    Optional<ButtonType> result = new Alert(Alert.AlertType.INFORMATION,
+                            destFile.getName()+ " file is already exists. Do you want to overwrite?",
+                            ButtonType.YES, ButtonType.NO).showAndWait();
+                    if (result.get() == ButtonType.NO) {
+                        continue;
+                    }
+                }
+                readAndWrite(file,destFile);
+            }
+            new Alert(Alert.AlertType.INFORMATION,"Files has been copied successfully").showAndWait();
+            srcFiles = null;
+            destDir = null;
+        }
+        else if (srcFiles == null && srcDirectory != null) {
+            File destDirectory = new File(destDir.getAbsolutePath(), srcDirectory.getName());
+            if (!destDirectory.exists()) {
+                destDirectory.mkdir();
+            }
+            else {
+                Optional<ButtonType> result = new Alert(Alert.AlertType.INFORMATION,
+                        "Directory already exists. Do you want to overwrite?",
+                        ButtonType.YES, ButtonType.NO).showAndWait();
+                if (result.get() == ButtonType.NO) {
+                    return;
+                }
+            }
+            findFiles(srcDirectory, destDirectory);
+            new Alert(Alert.AlertType.INFORMATION, "All files in the directory have been successfully copied.").showAndWait();
+            srcFiles = null;
+            destDir = null;
+        }
     }
 
     private void readAndWrite(File src, File dest) {
@@ -168,5 +197,13 @@ public class MainFormController {
                 findFiles(file, destFile);
             }
         }
+    }
+
+    private String formatNumber(double input) {
+        NumberFormat number = NumberFormat.getNumberInstance();
+        number.setGroupingUsed(true);
+        number.setMinimumFractionDigits(2);
+        number.setMaximumFractionDigits(2);
+        return number.format(input);
     }
 }
