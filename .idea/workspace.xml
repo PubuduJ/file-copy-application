@@ -15,8 +15,8 @@
       <list>
         <option value="JavaFXApplication" />
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="CSS File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -37,10 +37,21 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/pubudu/Documents/Git Projects/Copy paste app/file-copy-application/assets&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean package" />
+    </option>
+  </component>
   <component name="RunManager">
     <configuration name="file-copy-application" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
@@ -78,6 +89,7 @@
       <updated>1668747631856</updated>
       <workItem from="1668747633959" duration="1033000" />
       <workItem from="1668776526024" duration="5586000" />
+      <workItem from="1668783262563" duration="1453000" />
     </task>
     <servers />
   </component>
