@@ -82,7 +82,15 @@ public class MainFormController {
     }
 
     public void btnBrowseDirectory_OnAction(ActionEvent actionEvent) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select a destination directory");
+        directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        destDir = directoryChooser.showDialog(btnBrowseDirectory.getScene().getWindow());
+        if (destDir != null) lblBrowsedDirectory.setText("Browse path: " + destDir.getAbsolutePath());
+        else lblBrowsedDirectory.setText("No directory is selected");
 
+        if (srcFiles == null) btnCopy.setDisable(srcDirectory == null || destDir == null);
+        if (srcDirectory == null) btnCopy.setDisable(srcFiles == null || destDir == null);
     }
 
     public void btnCopy_OnAction(ActionEvent actionEvent) {
