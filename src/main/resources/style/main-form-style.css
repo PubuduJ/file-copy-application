@@ -1,0 +1,6 @@
+.btn:hover, .btn:focused {
+    -fx-background-color: black !important;
+}
+#btnCopy:hover, #btnCopy:focused {
+    -fx-background-color: maroon !important;
+}
