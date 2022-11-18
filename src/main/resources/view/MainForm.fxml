@@ -44,7 +44,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <Label fx:id="lblSelectedFile" alignment="CENTER" layoutX="299.0" layoutY="109.0" prefHeight="33.0" prefWidth="390.0" style="-fx-padding: 5; -fx-background-color: rgba(255,255,255,0.8); -fx-background-radius: 5; -fx-border-color: black; -fx-border-radius: 5;" text="No File / Directory selected" AnchorPane.leftAnchor="299.0" AnchorPane.rightAnchor="9.0">
+            <Label fx:id="lblSelectedFile" alignment="CENTER" layoutX="299.0" layoutY="109.0" prefHeight="33.0" prefWidth="390.0" style="-fx-padding: 5; -fx-background-color: rgba(255,255,255,0.8); -fx-background-radius: 5; -fx-border-color: black; -fx-border-radius: 5;" text="No File / Directory is selected" AnchorPane.leftAnchor="299.0" AnchorPane.rightAnchor="9.0">
                <font>
                   <Font name="Cantarell Bold" size="16.0" />
                </font>
@@ -62,7 +62,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <Label fx:id="lblBrowsedDirectory" alignment="CENTER" layoutX="164.0" layoutY="199.0" prefHeight="33.0" prefWidth="523.0" style="-fx-padding: 5; -fx-background-color: rgba(255,255,255,0.8); -fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5;" text="No Directory selected" AnchorPane.leftAnchor="164.0" AnchorPane.rightAnchor="9.0">
+            <Label fx:id="lblBrowsedDirectory" alignment="CENTER" layoutX="164.0" layoutY="199.0" prefHeight="33.0" prefWidth="523.0" style="-fx-padding: 5; -fx-background-color: rgba(255,255,255,0.8); -fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5;" text="No Directory is selected" AnchorPane.leftAnchor="164.0" AnchorPane.rightAnchor="9.0">
                <font>
                   <Font name="Cantarell Bold" size="16.0" />
                </font>

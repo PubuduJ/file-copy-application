@@ -59,12 +59,26 @@ public class MainFormController {
                 lblSelectedFile.setText("File name: " + srcFiles.get(0).getName() + ", size: " + formatNumber(srcFiles.get(0).length()/1024.0) + " Kb");
             }
         }
-        else lblSelectedFile.setText("No file/directory selected");
+        else lblSelectedFile.setText("No file/directory is selected");
         btnCopy.setDisable(srcFiles == null || destDir == null);
     }
 
     public void btnSelectDirectory_OnAction(ActionEvent actionEvent) {
-
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        directoryChooser.setTitle("Select a directory to copy");
+        srcDirectory = directoryChooser.showDialog(btnBrowseDirectory.getScene().getWindow());
+        if (srcDirectory != null) {
+            srcFiles = null;
+            double size = 0;
+            File[] files = srcDirectory.listFiles();
+            for (File file : files) {
+                size += file.length();
+            }
+            lblSelectedFile.setText("Folder name: " + srcDirectory.getName() + ", inner file size: " + formatNumber(size/1024.0) + " Kb");
+        }
+        else lblSelectedFile.setText("No file/directory is selected");
+        btnCopy.setDisable(srcDirectory == null || destDir == null);
     }
 
     public void btnBrowseDirectory_OnAction(ActionEvent actionEvent) {
