@@ -154,4 +154,19 @@ public class MainFormController {
         });
         new Thread(task).start();
     }
+
+    private void findFiles(File srcDir, File destDir) throws IOException {
+        File[] files = srcDir.listFiles();
+        for (File file : files) {
+            if (!file.isDirectory()) {
+                File destFile = new File(destDir.getAbsolutePath(),file.getName());
+                readAndWrite(file,destFile);
+            }
+            else {
+                File destFile = new File(destDir.getAbsolutePath(),file.getName());
+                destFile.mkdir();
+                findFiles(file, destFile);
+            }
+        }
+    }
 }
