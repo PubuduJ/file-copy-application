@@ -19,7 +19,7 @@ public class AppInitializer extends Application {
         primaryStage.setScene(scene);
         primaryStage.setMinHeight(402);
         primaryStage.setMinWidth(752);
-        primaryStage.setTitle("Simple File Copy-Paste Application");
+        primaryStage.setTitle("Simple File / Folder Copy-Paste Application");
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
         primaryStage.show();

@@ -2,7 +2,12 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.FadeTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -11,7 +16,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
-import java.io.File;
+import java.io.*;
 import java.text.NumberFormat;
 import java.util.List;
 
@@ -103,5 +108,50 @@ public class MainFormController {
         number.setMinimumFractionDigits(2);
         number.setMaximumFractionDigits(2);
         return number.format(input);
+    }
+
+    private void readAndWrite(File src, File dest) {
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                FileInputStream fis = new FileInputStream(src);
+                BufferedInputStream bis = new BufferedInputStream(fis);
+                FileOutputStream fos = new FileOutputStream(dest);
+                BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+                long fileSize = src.length();
+                int totalRead = 0;
+                while (true) {
+                    byte[] buffer = new byte[1024 * 10];
+                    int read = bis.read(buffer);
+                    totalRead += read;
+                    if (read == -1) break;
+                    bos.write(buffer,0,read);
+                    updateProgress(totalRead,fileSize);
+                }
+                updateProgress(fileSize,fileSize);
+                bis.close();
+                bos.close();
+                return null;
+            }
+        };
+        task.workDoneProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number prevWork, Number curWork) {
+                pgbBar.setWidth(pgbContainer.getWidth() / task.getTotalWork() * task.getWorkDone());
+                lblSize.setText(formatNumber(task.getWorkDone() / 1024.0) + " / " + formatNumber(task.getTotalWork() / 1024.0) + " Kb");
+                lblProgress.setText("Progress: " + formatNumber(task.getWorkDone() * 1.0 / task.getTotalWork() * 100) + " %");
+            }
+        });
+        task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent workerStateEvent) {
+                pgbBar.setWidth(pgbContainer.getWidth());
+                lblBrowsedDirectory.setText("No directory is selected");
+                lblSelectedFile.setText("No file/directory is selected");
+                btnCopy.setDisable(true);
+            }
+        });
+        new Thread(task).start();
     }
 }
